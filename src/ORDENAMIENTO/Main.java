@@ -9,96 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("****** Análisis de Algoritmos de Búsqueda y Ordenamiento ******");
-
-        int opcion;
-        do {
-            System.out.println("\n--- Menú Principal ---");
-            System.out.println("1. Probar con conjuntos de datos automáticos (benchmarks)");
-            System.out.println("2. Ingresar datos de ALUMNOS manualmente y probar ordenamiento");
-            System.out.println("3. Salir");
-            System.out.print("Elija una opción: ");
-
-            try {
-                opcion = scanner.nextInt();
-                switch (opcion) {
-                    case 1:
-                        ejecutarBenchmarksAutomaticos();
-                        break;
-                    case 2:
-                        ejecutarPruebasAlumnosManuales(scanner);
-                        break;
-                    case 3:
-                        System.out.println("Saliendo del programa. ¡Hasta luego!");
-                        break;
-                    default:
-                        System.out.println("Opción no válida. Intente de nuevo.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Por favor, ingrese un número.");
-                scanner.next(); // Limpiar el buffer del scanner
-                opcion = 0; // Para mantener el bucle
-            }
-        } while (opcion != 3);
-
-        scanner.close();
-    }
-
-    /**
-     * Ejecuta pruebas de rendimiento con conjuntos de datos automáticos (benchmarks).
-     * Las búsquedas se hacen con enteros, los ordenamientos con Alumnos.
-     */
-    private static void ejecutarBenchmarksAutomaticos() {
-        System.out.println("\n--- Ejecutando Benchmarks Automáticos ---");
-        int[] tamanos = {1000, 10000, 50000}; // Pequeño, Mediano, Grande
-
-        for (int tamano : tamanos) {
-            System.out.println("\n--- Probando con N = " + tamano + " elementos ---");
-
-            // --- Pruebas de Búsqueda (con enteros) ---
-            int[] datosIntOriginal = generarDatosAleatoriosInt(tamano);
-            int[] datosIntCopia;
-            int valorABuscar = datosIntOriginal[new Random().nextInt(tamano)];
-            int valorNoExistente = -1;
-            long inicio = System.nanoTime();
-            long fin = System.nanoTime();
-
-            // --- Pruebas de Ordenamiento (con Alumnos) ---
-            System.out.println("\n--- Algoritmos de Ordenamiento (con Alumnos) ---");
-            Alumno[] datosAlumnosOriginal = generarDatosAlumnosAleatorios(tamano);
-            Alumno[] datosAlumnosCopia;
-
-            // Ordenamiento Burbuja
-            datosAlumnosCopia = Arrays.copyOf(datosAlumnosOriginal, datosAlumnosOriginal.length);
-            inicio = System.nanoTime();
-            BubbleSort.ordenar(datosAlumnosCopia);
-            fin = System.nanoTime();
-            System.out.printf("Ordenamiento Burbuja (Alumnos): %.4f ms%n", (fin - inicio) / 1_000_000.0);
-            // System.out.println("Ordenado Burbuja (primeros 10): " + Arrays.toString(Arrays.copyOfRange(datosAlumnosCopia, 0, Math.min(10, tamano))));
-
-            // Ordenamiento por Inserción
-            datosAlumnosCopia = Arrays.copyOf(datosAlumnosOriginal, datosAlumnosOriginal.length);
-            inicio = System.nanoTime();
-            InsertionSort.ordenar(datosAlumnosCopia);
-            fin = System.nanoTime();
-            System.out.printf("Ordenamiento por Inserción (Alumnos): %.4f ms%n", (fin - inicio) / 1_000_000.0);
-            // System.out.println("Ordenado Inserción (primeros 10): " + Arrays.toString(Arrays.copyOfRange(datosAlumnosCopia, 0, Math.min(10, tamano))));
-
-            // Ordenamiento por Selección
-            datosAlumnosCopia = Arrays.copyOf(datosAlumnosOriginal, datosAlumnosOriginal.length);
-            inicio = System.nanoTime();
-            SelectionSort.ordenar(datosAlumnosCopia);
-            fin = System.nanoTime();
-            System.out.printf("Ordenamiento por Selección (Alumnos): %.4f ms%n", (fin - inicio) / 1_000_000.0);
-            // System.out.println("Ordenado Selección (primeros 10): " + Arrays.toString(Arrays.copyOfRange(datosAlumnosCopia, 0, Math.min(10, tamano))));
-        }
-    }
-
-    /**
-     * Permite al usuario ingresar datos de Alumnos manualmente y probar algoritmos de ordenamiento.
-     * @param scanner El objeto Scanner para la entrada del usuario.
-     */
-    private static void ejecutarPruebasAlumnosManuales(Scanner scanner) {
         System.out.println("\n--- Ejecutando Pruebas Manuales de Ordenamiento con Alumnos ---");
 
         // Arreglo de alumnos predefinidos como base
@@ -127,7 +37,7 @@ public class Main {
             System.out.println("1. Ordenamiento Burbuja");
             System.out.println("2. Ordenamiento por Inserción");
             System.out.println("3. Ordenamiento por Selección");
-            System.out.println("4. Volver al Menú Principal");
+            System.out.println("4. Salir");
             System.out.print("Elija una opción de algoritmo: ");
 
             try {
@@ -159,7 +69,7 @@ public class Main {
                                 (fin - inicio) / 1_000_000.0, Arrays.toString(datosParaSeleccion));
                         break;
                     case 4:
-                        System.out.println("Volviendo al menú principal...");
+                        System.out.println("Saliendo...");
                         break;
                     default:
                         System.out.println("Opción no válida. Intente de nuevo.");
@@ -175,6 +85,8 @@ public class Main {
             datosParaSeleccion = Arrays.copyOf(alumnosBase, alumnosBase.length);
 
         } while (opcionAlgoritmo != 4);
+
+        scanner.close();
     }
 
     /**

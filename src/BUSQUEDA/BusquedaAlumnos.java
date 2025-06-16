@@ -25,46 +25,53 @@ public class BusquedaAlumnos {
         };
 
         Scanner scanner = new Scanner(System.in);
+        int opcion;
 
-        // Menú de opciones para el usuario
-        System.out.println("¿Qué tipo de búsqueda deseas hacer?");
-        System.out.println("1. Búsqueda por nombre (secuencial)");
-        System.out.println("2. Búsqueda por ID (binaria)");
-        int opcion = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer
+        do {
+            // Menú de opciones para el usuario
+            System.out.println("\n --MENU PRINCIPAL--");
+            System.out.println("¿Qué tipo de búsqueda deseas hacer?");
+            System.out.println("1. Búsqueda por nombre (secuencial)");
+            System.out.println("2. Búsqueda por ID (binaria)");
+            System.out.println("3. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer
 
-        if (opcion == 1) {
-            System.out.print("Ingresa el nombre del alumno: ");
-            String nombreBuscado = scanner.nextLine();
-            int posicion = busquedaSecuencialPorNombre(alumnos, nombreBuscado);
+            if (opcion == 1) {
+                System.out.print("Ingresa el nombre del alumno: ");
+                String nombreBuscado = scanner.nextLine();
+                int posicion = busquedaSecuencialPorNombre(alumnos, nombreBuscado);
 
-            if (posicion != -1)
-                System.out.println("Alumno encontrado: " + alumnos[posicion]);
-            else
-                System.out.println("Alumno no encontrado.");
-        } else if (opcion == 2) {
-            // Ordenar el arreglo por ID para la busqueda binaria
-            Arrays.sort(alumnos, Comparator.comparingInt(Alumno::getId));
-            System.out.print("Ingresa el ID del alumno: ");
-            int idBuscado = scanner.nextInt();
-            int posicion = busquedaBinariaPorId(alumnos, idBuscado);
+                if (posicion != -1)
+                    System.out.println("Alumno encontrado: " + alumnos[posicion]);
+                else
+                    System.out.println("Alumno no encontrado.");
+            } else if (opcion == 2) {
+                // Ordenar el arreglo por ID para la búsqueda binaria
+                Arrays.sort(alumnos, Comparator.comparingInt(Alumno::getId));
+                System.out.print("Ingresa el ID del alumno: ");
+                int idBuscado = scanner.nextInt();
+                int posicion = busquedaBinariaPorId(alumnos, idBuscado);
 
-            if (posicion != -1)
-                System.out.println("Alumno encontrado: " + alumnos[posicion]);
-            else
-                System.out.println("Alumno no encontrado.");
-        } else {
-            System.out.println("Opción no válida.");
-        }
+                if (posicion != -1)
+                    System.out.println("Alumno encontrado: " + alumnos[posicion]);
+                else
+                    System.out.println("Alumno no encontrado.");
+            } else if (opcion != 3) {
+                System.out.println("Opción no válida.");
+            }
+        } while (opcion != 3);
 
+        System.out.println("Saliendo del programa...");
         scanner.close();
     }
 
     /**
-     * realiza una busqueda secuencial por nombre en un arreglo de alumnos
-     * @param alumnos arreglo de alumnos donde se realizara la búsqueda
+     * realiza una búsqueda secuencial por nombre en un arreglo de alumnos
+     * @param alumnos arreglo de alumnos donde se realizará la búsqueda
      * @param nombre nombre del alumno a buscar
-     * @return la posicion del alumno en el arreglo si es encontrado, -1 en caso contrario
+     * @return la posición del alumno en el arreglo si es encontrado, -1 en caso contrario
      */
     public static int busquedaSecuencialPorNombre(Alumno[] alumnos, String nombre) {
         for (int i = 0; i < alumnos.length; i++) {
@@ -77,10 +84,10 @@ public class BusquedaAlumnos {
 
     /**
      * realiza una búsqueda binaria por ID en un arreglo de alumnos
-     * requiere que el arreglo este ordenado por ID
-     * @param alumnos arreglo de alumnos donde se realizara la búsqueda
+     * requiere que el arreglo esté ordenado por ID
+     * @param alumnos arreglo de alumnos donde se realizará la búsqueda
      * @param id ID del alumno a buscar
-     * @return la posicion del alumno en el arreglo si es encontrado, -1 en caso contrario
+     * @return la posición del alumno en el arreglo si es encontrado, -1 en caso contrario
      */
     public static int busquedaBinariaPorId(Alumno[] alumnos, int id) {
         int izquierda = 0, derecha = alumnos.length - 1;
