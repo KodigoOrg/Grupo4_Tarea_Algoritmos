@@ -3,7 +3,7 @@ package ORDENAMIENTO;
 public class BubbleSort {
     /**
      * Implementa el algoritmo de ordenamiento burbuja para un arreglo de Alumnos.
-     * Utiliza el método compareTo de la clase Alumno para las comparaciones.
+     * Utiliza el metodo compareTo de la clase Alumno para las comparaciones.
      *
      * @param arr El arreglo de Alumnos a ordenar.
      */
