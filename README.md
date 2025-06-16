@@ -1,6 +1,6 @@
 # Implementación y Análisis de Algoritmos de Búsqueda y Ordenamiento en Java
 ---
-#### Grupo # 4
+### Grupo # 4
  Integrantes:
  * Alejandro Ernesto Juarez Argumedo
  * Nestor Ivan Fabian Colocho
