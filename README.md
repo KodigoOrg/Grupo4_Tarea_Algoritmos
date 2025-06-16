@@ -123,23 +123,23 @@ La notación Big O (O) describe el rendimiento o la complejidad de un algoritmo.
 
 ### 3.1 Búsqueda Secuencial
 
-El algoritmo lo encuentra en una sola comparación.
+> El algoritmo lo encuentra en una sola comparación.
 
 ### 3.2 Búsqueda Binaria
 
-El elemento buscado es el elemento central del arreglo en la primera comparación.
+> El elemento buscado es el elemento central del arreglo en la primera comparación.
 
 ### 3.3 Ordenamiento Burbuja (Bubble Sort)
 
-La optimización de la bandera de intercambiado permite que el algoritmo detecte esto en una sola pasada (lineal) y termine.
+> La optimización de la bandera de intercambiado permite que el algoritmo detecte esto en una sola pasada (lineal) y termine.
 
 ### 3.4 Ordenamiento por Inserción (Insertion Sort)
 
-El bucle interno (while) se ejecuta un mínimo de veces (una comparación por elemento), lo que resulta en una complejidad lineal.
+> El bucle interno (while) se ejecuta un mínimo de veces (una comparación por elemento), lo que resulta en una complejidad lineal.
 
 ### 3.5 Ordenamiento por Selección (Selection Sort)
 
-Siempre busca el mínimo en la sublista no ordenada en cada pasada.
+> Siempre busca el mínimo en la sublista no ordenada en cada pasada.
 
 ## 4. Metodología de Pruebas
 
