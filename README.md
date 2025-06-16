@@ -1,10 +1,10 @@
 # Implementación y Análisis de Algoritmos de Búsqueda y Ordenamiento en Java
-
->##### Grupo # 4
- >Integrantes:
- >* Alejandro Ernesto Juarez Argumedo
- >* Nestor Ivan Fabian Colocho
-
+---
+#### Grupo # 4
+ Integrantes:
+ * Alejandro Ernesto Juarez Argumedo
+ * Nestor Ivan Fabian Colocho
+---
 ## 1. Introducción
 
 Este informe detalla la implementación y el análisis de diversos algoritmos fundamentales en la ciencia de la computación: algoritmos de búsqueda (secuencial y binaria) y algoritmos de ordenamiento (burbuja, inserción y selección).
