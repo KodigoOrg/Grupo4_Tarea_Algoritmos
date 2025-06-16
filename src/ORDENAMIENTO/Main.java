@@ -14,30 +14,30 @@ public class Main {
         int opcion;
         do {
             System.out.println("\n--- Menú Principal ---");
-            System.out.println("1. Pruebas con datos automáticos");
-            System.out.println("2. Pruebas manuales de datos");
+            System.out.println("1. Probar con conjuntos de datos automáticos (benchmarks)");
+            System.out.println("2. Ingresar datos de ALUMNOS manualmente y probar ordenamiento");
             System.out.println("3. Salir");
-            System.out.print("Ingrese una opción: ");
+            System.out.print("Elija una opción: ");
 
             try {
                 opcion = scanner.nextInt();
                 switch (opcion) {
                     case 1:
-                        ejecutarAutomaticos(); //Ejecutamos con datos automaticos
+                        ejecutarBenchmarksAutomaticos();
                         break;
                     case 2:
-                        ejecutarPruebasManuales(scanner); // Ejecuta los Algoritmos con datos manuales.
+                        ejecutarPruebasAlumnosManuales(scanner);
                         break;
                     case 3:
-                        System.out.println("Cerrando consola.");
+                        System.out.println("Saliendo del programa. ¡Hasta luego!");
                         break;
                     default:
                         System.out.println("Opción no válida. Intente de nuevo.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Por favor, ingrese un número valido.");
-                scanner.next(); // Limpiar el scanner
-                opcion = 0; // Para mantener el ciclo (bucle)
+                System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                scanner.next(); // Limpiar el buffer del scanner
+                opcion = 0; // Para mantener el bucle
             }
         } while (opcion != 3);
 
@@ -46,97 +46,84 @@ public class Main {
 
     /**
      * Ejecuta pruebas de rendimiento con conjuntos de datos automáticos (benchmarks).
+     * Las búsquedas se hacen con enteros, los ordenamientos con Alumnos.
      */
-    private static void ejecutarAutomaticos() {
-        System.out.println("\n--- Ejecutando Automáticamente ---");
+    private static void ejecutarBenchmarksAutomaticos() {
+        System.out.println("\n--- Ejecutando Benchmarks Automáticos ---");
         int[] tamanos = {1000, 10000, 50000}; // Pequeño, Mediano, Grande
 
         for (int tamano : tamanos) {
             System.out.println("\n--- Probando con N = " + tamano + " elementos ---");
 
-            // Generar conjuntos de datos aleatorios
-            int[] datosOriginal = generarDatosAleatorios(tamano);
-            int[] datosCopia; // Para no modificar el original en cada prueba de ordenamiento
-
-            // Elegir un valor existente y uno no existente para las búsquedas
-            int valorABuscar = datosOriginal[new Random().nextInt(tamano)];
-            int valorNoExistente = -1; // Un valor que asumimos no existirá en datos aleatorios positivos
-
+            // --- Pruebas de Búsqueda (con enteros) ---
+            int[] datosIntOriginal = generarDatosAleatoriosInt(tamano);
+            int[] datosIntCopia;
+            int valorABuscar = datosIntOriginal[new Random().nextInt(tamano)];
+            int valorNoExistente = -1;
             long inicio = System.nanoTime();
             long fin = System.nanoTime();
 
+            // --- Pruebas de Ordenamiento (con Alumnos) ---
+            System.out.println("\n--- Algoritmos de Ordenamiento (con Alumnos) ---");
+            Alumno[] datosAlumnosOriginal = generarDatosAlumnosAleatorios(tamano);
+            Alumno[] datosAlumnosCopia;
 
-            // --- Pruebas de Ordenamiento ---
-            System.out.println("\n--- Algoritmos de Ordenamiento ---");
-
-            // Ordenamiento BubbleSort
-            datosCopia = Arrays.copyOf(datosOriginal, datosOriginal.length);
+            // Ordenamiento Burbuja
+            datosAlumnosCopia = Arrays.copyOf(datosAlumnosOriginal, datosAlumnosOriginal.length);
             inicio = System.nanoTime();
-            BubbleSort.ordenar(datosCopia);
+            BubbleSort.ordenar(datosAlumnosCopia);
             fin = System.nanoTime();
-            System.out.printf("Ordenamiento BubbleSort: %.4f ms%n", (fin - inicio) / 1_000_000.0);
-            // System.out.println("Ordenado BubbleSort (primeros 10): " + Arrays.toString(Arrays.copyOfRange(datosCopia, 0, Math.min(10, tamano))));
+            System.out.printf("Ordenamiento Burbuja (Alumnos): %.4f ms%n", (fin - inicio) / 1_000_000.0);
+            // System.out.println("Ordenado Burbuja (primeros 10): " + Arrays.toString(Arrays.copyOfRange(datosAlumnosCopia, 0, Math.min(10, tamano))));
 
-            // Ordenamiento InsertionSort
-            datosCopia = Arrays.copyOf(datosOriginal, datosOriginal.length);
+            // Ordenamiento por Inserción
+            datosAlumnosCopia = Arrays.copyOf(datosAlumnosOriginal, datosAlumnosOriginal.length);
             inicio = System.nanoTime();
-            InsertionSort.ordenar(datosCopia);
+            InsertionSort.ordenar(datosAlumnosCopia);
             fin = System.nanoTime();
-            System.out.printf("Ordenamiento InsertionSort: %.4f ms%n", (fin - inicio) / 1_000_000.0);
-            // System.out.println("Ordenado InsertionSort (primeros 10): " + Arrays.toString(Arrays.copyOfRange(datosCopia, 0, Math.min(10, tamano))));
+            System.out.printf("Ordenamiento por Inserción (Alumnos): %.4f ms%n", (fin - inicio) / 1_000_000.0);
+            // System.out.println("Ordenado Inserción (primeros 10): " + Arrays.toString(Arrays.copyOfRange(datosAlumnosCopia, 0, Math.min(10, tamano))));
 
-            // Ordenamiento por SelectionSort
-            datosCopia = Arrays.copyOf(datosOriginal, datosOriginal.length);
+            // Ordenamiento por Selección
+            datosAlumnosCopia = Arrays.copyOf(datosAlumnosOriginal, datosAlumnosOriginal.length);
             inicio = System.nanoTime();
-            SelectionSort.ordenar(datosCopia);
+            SelectionSort.ordenar(datosAlumnosCopia);
             fin = System.nanoTime();
-            System.out.printf("Ordenamiento SelectionSort: %.4f ms%n", (fin - inicio) / 1_000_000.0);
-            // System.out.println("Ordenado SelectionSort (primeros 10): " + Arrays.toString(Arrays.copyOfRange(datosCopia, 0, Math.min(10, tamano))));
+            System.out.printf("Ordenamiento por Selección (Alumnos): %.4f ms%n", (fin - inicio) / 1_000_000.0);
+            // System.out.println("Ordenado Selección (primeros 10): " + Arrays.toString(Arrays.copyOfRange(datosAlumnosCopia, 0, Math.min(10, tamano))));
         }
     }
 
     /**
-     * Permite al usuario ingresar datos manualmente y probar algoritmos.
+     * Permite al usuario ingresar datos de Alumnos manualmente y probar algoritmos de ordenamiento.
      * @param scanner El objeto Scanner para la entrada del usuario.
      */
-    private static void ejecutarPruebasManuales(Scanner scanner) {
-        System.out.println("\n--- Ejecutando Pruebas Manuales ---");
-        System.out.print("Ingrese la cantidad de elementos para el vector: ");
-        int tamano = 0;
-        try {
-            tamano = scanner.nextInt();
-            if (tamano <= 0) {
-                System.out.println("El tamaño del vector debe ser mayor que cero.");
-                return;
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Entrada inválida. Por favor, ingrese un número entero para el tamaño del vector.");
-            scanner.next(); // Limpiar el buffer
-            return;
-        }
+    private static void ejecutarPruebasAlumnosManuales(Scanner scanner) {
+        System.out.println("\n--- Ejecutando Pruebas Manuales de Ordenamiento con Alumnos ---");
 
-        int[] datosManual = new int[tamano];
-        System.out.println("Ingrese los " + tamano + " elementos del vector uno por uno:");
-        for (int i = 0; i < tamano; i++) {
-            System.out.print("Elemento " + (i + 1) + ": ");
-            try {
-                datosManual[i] = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida. Por favor, ingrese un número entero.");
-                scanner.next(); // Limpiar el buffer
-                i--; // Para que el usuario reingrese el elemento actual
-            }
-        }
-        System.out.println("Vector ingresado: " + Arrays.toString(datosManual));
+        // Arreglo de alumnos predefinidos como base
+        Alumno[] alumnosBase = {
+                new Alumno(101, "Alejandro"),
+                new Alumno(102, "Manuel"),
+                new Alumno(103, "Vladimir"),
+                new Alumno(104, "Diego"),
+                new Alumno(105, "Fernando"),
+                new Alumno(100, "Zoe"),
+                new Alumno(106, "Carlos"),
+                new Alumno(99, "Ana")
+        };
+
+        System.out.println("Utilizando el siguiente arreglo de Alumnos predefinido:");
+        System.out.println(Arrays.toString(alumnosBase));
 
         // Copias para cada algoritmo para asegurar que operan sobre los datos originales
-        int[] datosParaBurbuja = Arrays.copyOf(datosManual, datosManual.length);
-        int[] datosParaInsercion = Arrays.copyOf(datosManual, datosManual.length);
-        int[] datosParaSeleccion = Arrays.copyOf(datosManual, datosManual.length);
+        Alumno[] datosParaBurbuja = Arrays.copyOf(alumnosBase, alumnosBase.length);
+        Alumno[] datosParaInsercion = Arrays.copyOf(alumnosBase, alumnosBase.length);
+        Alumno[] datosParaSeleccion = Arrays.copyOf(alumnosBase, alumnosBase.length);
 
         int opcionAlgoritmo;
         do {
-            System.out.println("\n--- Seleccione un Algoritmo para Probar ---");
+            System.out.println("\n--- Seleccione un Algoritmo de Ordenamiento para Probar ---");
             System.out.println("1. Ordenamiento Burbuja");
             System.out.println("2. Ordenamiento por Inserción");
             System.out.println("3. Ordenamiento por Selección");
@@ -145,30 +132,31 @@ public class Main {
 
             try {
                 opcionAlgoritmo = scanner.nextInt();
+                long inicio, fin;
                 switch (opcionAlgoritmo) {
                     case 1: // Ordenamiento Burbuja
                         System.out.println("Ordenando con Burbuja...");
-                        long inicioBurbuja = System.nanoTime();
+                        inicio = System.nanoTime();
                         BubbleSort.ordenar(datosParaBurbuja);
-                        long finBurbuja = System.nanoTime();
+                        fin = System.nanoTime();
                         System.out.printf("Ordenamiento Burbuja (tiempo: %.4f ms). Vector ordenado: %s%n",
-                                (finBurbuja - inicioBurbuja) / 1_000_000.0, Arrays.toString(datosParaBurbuja));
+                                (fin - inicio) / 1_000_000.0, Arrays.toString(datosParaBurbuja));
                         break;
                     case 2: // Ordenamiento por Inserción
                         System.out.println("Ordenando con Inserción...");
-                        long inicioInsercion = System.nanoTime();
+                        inicio = System.nanoTime();
                         InsertionSort.ordenar(datosParaInsercion);
-                        long finInsercion = System.nanoTime();
+                        fin = System.nanoTime();
                         System.out.printf("Ordenamiento por Inserción (tiempo: %.4f ms). Vector ordenado: %s%n",
-                                (finInsercion - inicioInsercion) / 1_000_000.0, Arrays.toString(datosParaInsercion));
+                                (fin - inicio) / 1_000_000.0, Arrays.toString(datosParaInsercion));
                         break;
                     case 3: // Ordenamiento por Selección
                         System.out.println("Ordenando con Selección...");
-                        long inicioSeleccion = System.nanoTime();
+                        inicio = System.nanoTime();
                         SelectionSort.ordenar(datosParaSeleccion);
-                        long finSeleccion = System.nanoTime();
+                        fin = System.nanoTime();
                         System.out.printf("Ordenamiento por Selección (tiempo: %.4f ms). Vector ordenado: %s%n",
-                                (finSeleccion - inicioSeleccion) / 1_000_000.0, Arrays.toString(datosParaSeleccion));
+                                (fin - inicio) / 1_000_000.0, Arrays.toString(datosParaSeleccion));
                         break;
                     case 4:
                         System.out.println("Volviendo al menú principal...");
@@ -181,25 +169,38 @@ public class Main {
                 scanner.next(); // Limpiar el buffer
                 opcionAlgoritmo = 0; // Para mantener el bucle
             }
-            // Recargar copias de los datos originales para la siguiente prueba si es de ordenamiento o busqueda que modifique el array
-            datosParaBurbuja = Arrays.copyOf(datosManual, datosManual.length);
-            datosParaInsercion = Arrays.copyOf(datosManual, datosManual.length);
-            datosParaSeleccion = Arrays.copyOf(datosManual, datosManual.length);
+            // Recargar copias de los datos originales para la siguiente prueba
+            datosParaBurbuja = Arrays.copyOf(alumnosBase, alumnosBase.length);
+            datosParaInsercion = Arrays.copyOf(alumnosBase, alumnosBase.length);
+            datosParaSeleccion = Arrays.copyOf(alumnosBase, alumnosBase.length);
 
-        } while (opcionAlgoritmo != 6);
+        } while (opcionAlgoritmo != 4);
     }
 
     /**
      * Genera un arreglo de enteros con números aleatorios.
-     *
      * @param tamano El tamaño del arreglo.
      * @return Un arreglo de enteros aleatorios.
      */
-    private static int[] generarDatosAleatorios(int tamano) {
+    private static int[] generarDatosAleatoriosInt(int tamano) {
         int[] arr = new int[tamano];
         Random rand = new Random();
         for (int i = 0; i < tamano; i++) {
             arr[i] = rand.nextInt(tamano * 10); // Valores entre 0 y (tamano * 10 - 1)
+        }
+        return arr;
+    }
+
+    /**
+     * Genera un arreglo de objetos Alumno con IDs aleatorios y nombres genéricos.
+     * @param tamano El tamaño del arreglo.
+     * @return Un arreglo de objetos Alumno aleatorios.
+     */
+    private static Alumno[] generarDatosAlumnosAleatorios(int tamano) {
+        Alumno[] arr = new Alumno[tamano];
+        Random rand = new Random();
+        for (int i = 0; i < tamano; i++) {
+            arr[i] = new Alumno(rand.nextInt(tamano * 2) + 1, "Alumno_" + i); // IDs y nombres aleatorios/genéricos
         }
         return arr;
     }
